@@ -77,21 +77,19 @@ else
 fi
 
 # ===============Maven BUILD & PUSH DOCKER IAMGE======================================
-readonly local docker_args="-Ddockerfile.skip=false -Ddockerfile.repository=$MAVEN_DOCKER_FILE_REPOSITORY -Ddockerfile.username=$MAVEN_DOCKER_USER -Ddockerfile.password=$MAVEN_DOCKER_PASSWORD $MAVEN_DOCKER_ARGS";
-
 
 echo "MAVEN_RELEASE_PUSH_DOCKER $MAVEN_RELEASE_PUSH_DOCKER"
 if [[ $MAVEN_RELEASE_PUSH_DOCKER == "true" ]]; then
-     echo "Do mvn dockerfile:build dockerfile:push with args ${docker_args}"
-     mvn -f target/checkout/pom.xml dockerfile:build dockerfile:push "$docker_args"
+     echo "Do mvn dockerfile:build dockerfile:push -Ddockerfile.skip=false -Ddockerfile.repository=$MAVEN_DOCKER_FILE_REPOSITORY -Ddockerfile.username=$MAVEN_DOCKER_USER -Ddockerfile.password=$MAVEN_DOCKER_PASSWORD $MAVEN_DOCKER_ARGS"
+     mvn -f target/checkout/pom.xml dockerfile:build dockerfile:push -Ddockerfile.skip=false -Ddockerfile.repository=$MAVEN_DOCKER_FILE_REPOSITORY -Ddockerfile.username=$MAVEN_DOCKER_USER -Ddockerfile.password=$MAVEN_DOCKER_PASSWORD $MAVEN_DOCKER_ARGS
 else
   echo "Push release docker image skipped."
 fi
 
 echo "MAVEN_SNAPSHOT_PUSH_DOCKER $MAVEN_SNAPSHOT_PUSH_DOCKER"
 if [[ $MAVEN_SNAPSHOT_PUSH_DOCKER == "true" ]]; then
-     echo "Do mvn dockerfile:build dockerfile:push with args ${docker_args}"
-     mvn deploy dockerfile:build dockerfile:push "$docker_args"
+     echo "Do mvn dockerfile:build dockerfile:push -Ddockerfile.skip=false -Ddockerfile.repository=$MAVEN_DOCKER_FILE_REPOSITORY -Ddockerfile.username=$MAVEN_DOCKER_USER -Ddockerfile.password=$MAVEN_DOCKER_PASSWORD $MAVEN_DOCKER_ARGS"
+     mvn deploy dockerfile:build dockerfile:push -Ddockerfile.skip=false -Ddockerfile.repository=$MAVEN_DOCKER_FILE_REPOSITORY -Ddockerfile.username=$MAVEN_DOCKER_USER -Ddockerfile.password=$MAVEN_DOCKER_PASSWORD $MAVEN_DOCKER_ARGS
 else
   echo "Push shapshot docker image skipped."
 fi
