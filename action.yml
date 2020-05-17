@@ -1,0 +1,127 @@
+# action.yml
+name: 'Maven Release and Publish'
+author: https://github.com/qcastel, https://github.com/mg-smartrent
+description: 'Release your java application and publish artifacts to GitHub Packages'
+branding:
+  color: blue
+  icon: unlock
+inputs:
+  release-branch-name:
+    description: 'Filter the branch to execute the release on'
+    required: false
+
+  gpg-enabled:
+    description: 'Enable gpg signing'
+    required: false
+    default: false
+  gpg-key-id:
+    description: 'The GPG key ID'
+    required: false
+  gpg-key:
+    description: 'The GPG key'
+    required: false
+
+  maven-local-repo-path:
+    description: 'The maven local repository path'
+    required: false
+    default: '$M2_HOME/repository'
+  maven-repo-server-id:
+    description: 'Maven server repository id to push the artefacts to'
+    required: true
+  maven-repo-server-username:
+    description: 'Maven server repository username'
+    required: true
+  maven-repo-server-password:
+    description: 'Maven server repository password'
+    required: true
+  git-release-bot-name:
+    description: 'The git user name for commiting the release'
+    required: true
+  git-release-bot-email:
+    description: 'The git user email for commiting the release'
+    required: true
+
+  access-token:
+    description: 'Github access token. https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line'
+    required: true
+
+
+  maven-release-args:
+    description: 'Inject arguments in mvn docker build and push.'
+    required: false
+    default: ''
+
+  maven-release-publish:
+    description: 'Publish the released artifact to GitHub Packages'
+    required: false
+
+  maven-snapshot-publish:
+    description: 'Publish the new post release snapshot artifact to GitHub Packages'
+    required: false
+
+  maven-publish-args:
+    description: 'Inject arguments in mvn publish command, ex: -Dskip.unit.tests=true - to skip the tests'
+    required: false
+
+
+  maven-release-push-docker:
+    description: 'Build and Push docker image of the released version.'
+    required: false
+
+  maven-snapshot-push-docker:
+    description: 'Build and Push docker image of the new post release snapshot version.'
+    required: false
+
+  maven-docker-args:
+    description: 'Inject arguments in mvn docker build and push.'
+    required: false
+    default: ''
+
+  maven-docker-user:
+    description: 'Docker registry username'
+    required: false
+    default: ''
+
+  maven-docker-password:
+    description: 'Docker registry password our auth token'
+    required: false
+    default: ''
+
+  maven-docker-file-repository:
+    description: 'Docker file repository uri, ex: "docker.io/myuser/logs-aggregator-service"'
+    required: false
+    default: ''
+
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - release.sh
+  env:
+    RELEASE_BRANCH_NAME: ${{ inputs.release-branch-name }}
+    GIT_RELEASE_BOT_NAME: ${{ inputs.git-release-bot-name }}
+    GIT_RELEASE_BOT_EMAIL: ${{ inputs.git-release-bot-email }}
+    GITHUB_ACCESS_TOKEN: ${{ inputs.access-token }}
+
+    GPG_ENABLED: ${{ inputs.gpg-enabled }}
+    GPG_KEY_ID: ${{ inputs.gpg-key-id }}
+    GPG_KEY: ${{ inputs.gpg-key }}
+
+    MAVEN_LOCAL_REPO_PATH: ${{ inputs.maven-local-repo-path }}
+    MAVEN_REPO_SERVER_ID: ${{ inputs.maven-repo-server-id }}
+    MAVEN_REPO_SERVER_USERNAME: ${{ inputs.maven-repo-server-username }}
+    MAVEN_REPO_SERVER_PASSWORD: ${{ inputs.maven-repo-server-password }}
+
+    MAVEN_RELEASE_ARGS: ${{ inputs.maven-release-args }}
+
+    MAVEN_RELEASE_PUBLISH: ${{ inputs.maven-release-publish }}
+    MAVEN_SNAPSHOT_PUBLISH: ${{ inputs.maven-snapshot-publish }}
+    MAVEN_PUBLISH_ARGS: ${{ inputs.maven-publish-args }}
+
+    MAVEN_RELEASE_PUSH_DOCKER: ${{ inputs.maven-release-push-docker }}
+    MAVEN_SNAPSHOT_PUSH_DOCKER: ${{ inputs.maven-snapshot-push-docker }}
+    MAVEN_DOCKER_ARGS: ${{ inputs.maven-docker-args }}
+    MAVEN_DOCKER_USER: ${{ inputs.maven-docker-user }}
+    MAVEN_DOCKER_PASSWORD: ${{ inputs.maven-docker-password }}
+    MAVEN_DOCKER_FILE_REPOSITORY: ${{ inputs.maven-docker-file-repository }}
