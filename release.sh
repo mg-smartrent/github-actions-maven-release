@@ -80,7 +80,7 @@ fi
 
 echo "MAVEN_RELEASE_PUSH_DOCKER $MAVEN_RELEASE_PUSH_DOCKER"
 if [[ $MAVEN_RELEASE_PUSH_DOCKER == "true" ]]; then
-     echo "Do mvn dockerfile:build dockerfile:push -Ddockerfile.skip=false -Ddockerfile.repository=$MAVEN_DOCKER_FILE_REPOSITORY -Ddockerfile.username=$MAVEN_DOCKER_USER -Ddockerfile.password=$MAVEN_DOCKER_PASSWORD $MAVEN_DOCKER_ARGS"
+     echo "Run mvn dockerfile:build dockerfile:push -Ddockerfile.skip=false -Ddockerfile.repository=$MAVEN_DOCKER_FILE_REPOSITORY -Ddockerfile.username=$MAVEN_DOCKER_USER -Ddockerfile.password=$MAVEN_DOCKER_PASSWORD $MAVEN_DOCKER_ARGS"
      mvn -f target/checkout/pom.xml dockerfile:build dockerfile:push -Ddockerfile.skip=false -Ddockerfile.repository=$MAVEN_DOCKER_FILE_REPOSITORY -Ddockerfile.username=$MAVEN_DOCKER_USER -Ddockerfile.password=$MAVEN_DOCKER_PASSWORD $MAVEN_DOCKER_ARGS
 else
   echo "Push release docker image skipped."
