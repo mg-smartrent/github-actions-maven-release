@@ -60,13 +60,13 @@ echo "-------> Do mvn release:perform with arguments $MAVEN_RELEASE_ARGS"
 mvn $MAVEN_REPO_LOCAL release:perform -Dusername=$GITHUB_ACCESS_TOKEN $MAVEN_RELEASE_ARGS
 
 # ===============MAVEN DEPLY & UPLOAD ARTIFACTS TO GITHUB PAKCAGES=================
-echo "-------> MAVEN_RELEASE_PUBLISH $MAVEN_RELEASE_PUBLISH"
-if [[ $MAVEN_RELEASE_PUBLISH == "true" ]]; then
-     echo "-------> Do mvn deploy with arguments $MAVEN_PUBLISH_ARGS"
-     mvn -f target/checkout/pom.xml deploy -Dusername=$GITHUB_ACCESS_TOKEN $MAVEN_PUBLISH_ARGS
-else
-  echo "Release deploy skipped."
-fi
+#echo "-------> MAVEN_RELEASE_PUBLISH $MAVEN_RELEASE_PUBLISH"
+#if [[ $MAVEN_RELEASE_PUBLISH == "true" ]]; then
+#     echo "-------> Do mvn deploy with arguments $MAVEN_PUBLISH_ARGS"
+#     mvn -f target/checkout/pom.xml deploy -Dusername=$GITHUB_ACCESS_TOKEN $MAVEN_PUBLISH_ARGS
+#else
+#  echo "Release deploy skipped."
+#fi
 
 echo "-------> MAVEN_SNAPSHOT_PUBLISH $MAVEN_SNAPSHOT_PUBLISH"
 if [[ $MAVEN_SNAPSHOT_PUBLISH == "true" ]]; then
