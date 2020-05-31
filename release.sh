@@ -53,10 +53,10 @@ if [[ -n "$MAVEN_LOCAL_REPO_PATH" ]]; then
 fi
 
 # ===============MAVEN RELEASE====================================================
-echo "-------> Do mvn release:prepare with arguments $MAVEN_RELEASE_ARGS"
+echo "-------> Do mvn $MAVEN_REPO_LOCAL release:prepare with arguments $MAVEN_RELEASE_ARGS"
 mvn $MAVEN_REPO_LOCAL release:prepare -Dusername=$GITHUB_ACCESS_TOKEN $MAVEN_RELEASE_ARGS
 
-echo "-------> Do mvn release:perform with arguments $MAVEN_RELEASE_ARGS"
+echo "-------> Do mvn $MAVEN_REPO_LOCAL release:perform with arguments $MAVEN_RELEASE_ARGS"
 mvn $MAVEN_REPO_LOCAL release:perform -Dusername=$GITHUB_ACCESS_TOKEN $MAVEN_RELEASE_ARGS
 
 # ===============MAVEN DEPLY & UPLOAD ARTIFACTS TO GITHUB PAKCAGES=================
